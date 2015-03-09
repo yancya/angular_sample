@@ -17,6 +17,11 @@
 #= require_tree .
 app = angular.module('app', [])
 
+eventCtrl = ($rootScope)->
+  $inject: ['$rootScope']
+  test_event: (name)-> $rootScope.$broadcast('testEvent', name)
+app.controller('eventCtrl', eventCtrl)
+
 Hoge = ->
   scope:
     name: '='
@@ -24,11 +29,7 @@ Hoge = ->
   restrict: 'E'
   templateUrl: '/templates/_hoge.html'
   replace: true
-  controller: [
-    '$rootScope',
-    ($rootScope)->
-      test_event: (name)-> $rootScope.$broadcast('testEvent', name)
-  ]
+  controller: 'eventCtrl'
   link: (scope, elm, attrs, ctrl)->
     scope.name = 'initial'
     scope.hello = ->
