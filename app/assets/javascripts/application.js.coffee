@@ -15,21 +15,40 @@
 #= require turbolinks
 #= require angular
 #= require_tree .
-app = angular.module('app', [])
 
-eventCtrl = ($rootScope)->
+
+class BroadcastService
   $inject: ['$rootScope']
-  test_event: (name)-> $rootScope.$broadcast('testEvent', name)
-app.controller('eventCtrl', eventCtrl)
+  constructor: ($rootScope)->
+    @$rootScope = $rootScope
+  send: (msg, data)->
+    @$rootScope.$broadcast(msg, data)
+
+class EventCtrl
+  $inject: ['BroadcastService']
+  constructor: (BroadcastService)->
+    @BroadcastService = BroadcastService
+  test_event: (name)->
+    @BroadcastService.send('testEvent', name)
+
+class ListenCtrl
+  $inject: ['$rootScope']
+  name: 'hogehoge'
+  constructor: ($rootScope)->
+    $rootScope.$on(
+      'testEvent',
+      (event, data)=>
+        console.log "Fuga: #{data}"
+        @name = data
+    )
 
 Hoge = ->
   scope:
     name: '='
-    alert_wa: '&'
   restrict: 'E'
   templateUrl: '/templates/_hoge.html'
   replace: true
-  controller: 'eventCtrl'
+  controller: 'EventCtrl'
   link: (scope, elm, attrs, ctrl)->
     scope.name = 'initial'
     scope.hello = ->
@@ -37,20 +56,19 @@ Hoge = ->
       ctrl.test_event(scope.name)
       scope.name = "#{scope.name}_"
 
-app.directive('hoge', Hoge)
-
 Fuga = ->
   scope: {}
   restrict: 'E'
-  template: '<span>hoge</span>'
-  controller: [
-    '$rootScope',
-    ($rootScope)->
-      $rootScope.$on(
-        'testEvent',
-        (event, data)-> console.log "Fuga: #{data}"
-      )
-  ]
+  template: '<span>{{ctrl.name}}</span>'
+  controller: 'ListenCtrl'
+  link: (scope, elm, attrs, ctrl)->
+    scope.ctrl = ctrl
+    console.log ctrl
 
+app = angular.module('app', [])
+app.service('BroadcastService', BroadcastService)
+app.controller('EventCtrl', EventCtrl)
+app.controller('ListenCtrl', ListenCtrl)
+app.directive('hoge', Hoge)
 app.directive('fuga', Fuga)
 
