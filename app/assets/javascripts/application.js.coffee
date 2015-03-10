@@ -35,12 +35,10 @@ class ListenCtrl
   $inject: ['$rootScope']
   name: 'hogehoge'
   constructor: ($rootScope)->
-    $rootScope.$on(
-      'testEvent',
+    $rootScope.$on 'testEvent',
       (event, data)=>
         console.log "Fuga: #{data}"
         @name = data
-    )
 
 Hoge = ->
   scope:
@@ -66,6 +64,7 @@ Fuga = ->
     console.log ctrl
 
 app = angular.module('app', [])
+
 app.service('BroadcastService', BroadcastService)
 app.controller('EventCtrl', EventCtrl)
 app.controller('ListenCtrl', ListenCtrl)
