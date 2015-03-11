@@ -63,6 +63,24 @@ Fuga = ->
     scope.ctrl = ctrl
     console.log ctrl
 
+NRoot = ->
+  scope: {}
+  restrict: 'E'
+  transclude: true
+  template: '<h1>独立</h1><div ng-transclude></div>'
+
+Num = ->
+  scope: {}
+  restrict: 'E'
+  template: '<button ng-click="succ()">{{num}}</button>'
+  link: (scope, elm, attrs)->
+    scope.num = parseInt(attrs.num)
+    scope.succ = ->
+      scope.$parent.$broadcast('succ', scope.num)
+    scope.$on 'succ',
+      (event, data)->
+        scope.num += data
+
 app = angular.module('app', [])
 
 app.service('BroadcastService', BroadcastService)
@@ -70,4 +88,7 @@ app.controller('EventCtrl', EventCtrl)
 app.controller('ListenCtrl', ListenCtrl)
 app.directive('hoge', Hoge)
 app.directive('fuga', Fuga)
+app.directive('nroot', NRoot)
+app.directive('num', Num)
+
 
