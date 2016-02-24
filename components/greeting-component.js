@@ -6,7 +6,7 @@ let GreetingComponent = {
     bindings: {
         name: "="
     },
-    template: `<h1>Hello {{$ctrl.upperName}}!</h1>`,
+    templateUrl: './templates/greeting-template.html',
     controller: GreetingCtrl
 };
 
