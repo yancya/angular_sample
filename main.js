@@ -3,16 +3,20 @@
 import angular from 'angular';
 import MyAppComponent from './components/my-app-component.js';
 import GreetingComponent from './components/greeting-component.js';
+import MonitorComponent from './components/monitor-component.js';
+import IncrementorComponent from './components/incrementor-component.js';
+import CommonValueService from './services/common-value-service.js';
 
-console.dir(MyAppComponent);
+const APP = angular.module("app", []);
 
-const APP = angular.
-          module("app", []).
-          component('myApp', MyAppComponent).
-          component('greeting', GreetingComponent);
+APP.service('CommonValueService', CommonValueService);
+
+APP.component('myApp', MyAppComponent).
+    component('greeting', GreetingComponent).
+    component('monitor', MonitorComponent).
+    component('incrementor', IncrementorComponent);
 
 window.addEventListener(
     'load',
     () => angular.bootstrap(document.body, [APP.name])
 );
-
