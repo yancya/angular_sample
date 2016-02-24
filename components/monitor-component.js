@@ -2,7 +2,8 @@
 
 import MonitorCtrl from '../controllers/monitor-controller.js';
 
-let MonitorComponent = { 
+let MonitorComponent = {
+    transclude: true,
     templateUrl: './templates/monitor-template.html',
     controller: MonitorCtrl
 };

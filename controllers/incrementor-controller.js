@@ -6,7 +6,7 @@ class IncrementorCtrl {
     }
     
     increment() {
-        this.CommonValueService.commonValue++;
+        this.CommonValueService.increment();
     }
 };
 
