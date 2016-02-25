@@ -1,3 +1,6 @@
 <div>
   <button ng-click="$ctrl.increment()">increment</button>
+  <input type="text" ng-model="$ctrl.CommonValueService.hoge">
+  <select ng-model="$ctrl.SubValueService.n"
+          ng-options="n as n for n in $ctrl.indexes"><select>{{$ctrl.fuga}}{{$ctrl.SubValueService}}
 </div>

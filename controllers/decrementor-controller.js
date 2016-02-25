@@ -1,8 +1,9 @@
 'use strict';
 
 class DecrementorCtrl {
-    constructor(CommonValueService) {
+    constructor(CommonValueService, SubValueService) {
         this.CommonValueService = CommonValueService;
+        this.SubValueService = SubValueService;
     }
     
     decrement() {
@@ -12,8 +13,12 @@ class DecrementorCtrl {
             console.log(e.message);
         }
     }
+
+    get fuga() {
+        return this.CommonValueService.elementByFuga();
+    }
 };
 
-DecrementorCtrl.$inject = ['CommonValueService'];
+DecrementorCtrl.$inject = ['CommonValueService', 'SubValueService'];
 
 export default DecrementorCtrl;

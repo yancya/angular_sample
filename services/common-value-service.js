@@ -1,8 +1,10 @@
 'use strict';
 
-export default class CommonValueService {
-    constructor() {
+class CommonValueService {
+    constructor(SubValueService) {
         this.commonValue = 0;
+        this.hoge = 'initialized';
+        this.SubValueService = SubValueService;
     }
 
     increment() {
@@ -16,4 +18,12 @@ export default class CommonValueService {
             throw new Error('This value can\'t be negative.');
         }
     }
+
+    elementByFuga() {
+        return ['a', 'b', 'c', 'd', 'e'][this.SubValueService.n];
+    }
 };
+
+CommonValueService.$inject = ['SubValueService'];
+
+export default CommonValueService;

@@ -7,10 +7,12 @@ import MonitorComponent from './components/monitor-component.js';
 import IncrementorComponent from './components/incrementor-component.js';
 import DecrementorComponent from './components/decrementor-component.js';
 import CommonValueService from './services/common-value-service.js';
+import SubValueService from './services/sub-value-service.js';
 
 const APP = angular.module("app", []);
 
-APP.service('CommonValueService', CommonValueService);
+APP.service('CommonValueService', CommonValueService).
+    service('SubValueService', SubValueService);
 
 APP.component('myApp', MyAppComponent).
     component('greeting', GreetingComponent).
